@@ -7,6 +7,7 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D rb;
     [SerializeField] float moveSpeed;
     [SerializeField] float jumpStrength;
+    
     public bool isGrounded;
     public PlayerHealth playerHealth;
     void Awake()
@@ -14,11 +15,13 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
     }
 
-   
+    
+
     void FixedUpdate()
     {
         PlayerMovement();
         Jump();
+       
     }
 
     private void PlayerMovement()
@@ -39,22 +42,25 @@ public class PlayerController : MonoBehaviour
 
     private void Jump()
     {
-        if(Input.GetKey(KeyCode.Space) && isGrounded)
+        if (Input.GetKey(KeyCode.Space) && isGrounded)
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpStrength);
             isGrounded = false;
         } 
     }
 
+    
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        // Checks if the player is grounded. Is used to check if the player can jump or not
+
+        //Checks if the player is grounded. Is used to check if the player can jump or not
         if(collision.gameObject.tag == "Ground")
         {
             isGrounded = true;
         }
         // Check if the player is touching the enemy, check that enemy exists, and if collision take damage
-        if(collision.gameObject.tag == "Enemy")
+        if (collision.gameObject.tag == "Enemy")
         {
             EnemyController enemyController = collision.gameObject.GetComponent<EnemyController>();
             if (enemyController != null)
